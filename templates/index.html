@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt Expander</title>
+    <script>
+      async function expandPrompt() {
+        const prompt = document.getElementById("prompt").value;
+        const response = await fetch("/expand", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt }),
+        });
+        const data = await response.json();
+        document.getElementById("output").innerText = data.detailed_prompt;
+      }
+    </script>
+  </head>
+  <body>
+    <h2>Prompt Expander</h2>
+    <input type="text" id="prompt" placeholder="Enter a short prompt" />
+    <button onclick="expandPrompt()">Expand</button>
+    <p id="output"></p>
+  </body>
+</html>
