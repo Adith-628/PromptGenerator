@@ -7,15 +7,18 @@
     <script>
       async function expandPrompt() {
         const prompt = document.getElementById("prompt").value;
+
         const response = await fetch("/expand", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ prompt }),
         });
+
         const data = await response.json();
-        document.getElementById("output").innerText = data.detailed_prompt;
+        document.getElementById("nltk_output").innerText =
+          "NLTK Expansion: " + data.nltk_expansion;
+        document.getElementById("transformers_output").innerText =
+          "Transformers Expansion: " + data.transformers_expansion;
       }
     </script>
   </head>
@@ -23,6 +26,8 @@
     <h2>Prompt Expander</h2>
     <input type="text" id="prompt" placeholder="Enter a short prompt" />
     <button onclick="expandPrompt()">Expand</button>
-    <p id="output"></p>
+
+    <p id="nltk_output"></p>
+    <p id="transformers_output"></p>
   </body>
 </html>
